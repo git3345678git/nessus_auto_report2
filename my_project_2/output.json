@@ -1,0 +1,160 @@
+{
+  "Critical": [
+    {
+      "name": "Redis Server Unprotected by Password Authentication",
+      "address": [
+        "192.168.1.59:6379"
+      ],
+      "id": "100634",
+      "cvss": "7.5"
+    },
+    {
+      "name": "SSL Version 2 and 3 Protocol Detection",
+      "address": [
+        "192.168.30.227:3269",
+        "192.168.30.227:636"
+      ],
+      "id": "20007",
+      "cvss": "10.0"
+    }
+  ],
+  "High": [
+    {
+      "name": "Microsoft Windows LAN Manager SNMP LanMan Services Disclosure",
+      "address": [
+        "192.168.1.43:161"
+      ],
+      "id": "10547",
+      "cvss": "7.5"
+    },
+    {
+      "name": "MongoDB 5.0.x < 5.0.25 / 6.0.x < 6.0.14 / 7.0.x < 7.0.6 Improper Input Validation (SERVER-85263)",
+      "address": [
+        "192.168.1.59:27017"
+      ],
+      "id": "197879",
+      "cvss": "5.0"
+    },
+    {
+      "name": "SNMP Agent Default Community Name (public)",
+      "address": [
+        "192.168.1.43:161"
+      ],
+      "id": "41028",
+      "cvss": "7.5"
+    },
+    {
+      "name": "SSL Certificate Signed Using Weak Hashing Algorithm",
+      "address": [
+        "192.168.30.227:3269",
+        "192.168.30.227:636"
+      ],
+      "id": "35291",
+      "cvss": "5.0"
+    },
+    {
+      "name": "SSL Medium Strength Cipher Suites Supported (SWEET32)",
+      "address": [
+        "192.168.1.43:3389",
+        "192.168.30.227:3269",
+        "192.168.30.227:636"
+      ],
+      "id": "42873",
+      "cvss": "5.0"
+    }
+  ],
+  "Medium": [
+    {
+      "name": "JQuery 1.2 < 3.5.0 Multiple XSS",
+      "address": [
+        "192.168.1.244:8080"
+      ],
+      "id": "136929",
+      "cvss": "4.3"
+    },
+    {
+      "name": "Microsoft Windows LAN Manager SNMP LanMan Users Disclosure",
+      "address": [
+        "192.168.1.43:161"
+      ],
+      "id": "10546",
+      "cvss": "5.0"
+    },
+    {
+      "name": "SMB Signing not required",
+      "address": [
+        "192.168.1.18:445",
+        "192.168.1.20:445",
+        "192.168.1.5:445",
+        "192.168.1.7:445",
+        "192.168.30.224:445",
+        "192.168.30.229:445"
+      ],
+      "id": "57608",
+      "cvss": "5.0"
+    },
+    {
+      "name": "SSL Certificate Cannot Be Trusted",
+      "address": [
+        "192.168.1.43:3389",
+        "192.168.1.59:8080",
+        "192.168.1.59:8090",
+        "192.168.30.227:3269",
+        "192.168.30.227:636"
+      ],
+      "id": "51192",
+      "cvss": "6.4"
+    },
+    {
+      "name": "SSL RC4 Cipher Suites Supported (Bar Mitzvah)",
+      "address": [
+        "192.168.30.227:3269",
+        "192.168.30.227:636"
+      ],
+      "id": "65821",
+      "cvss": "4.3"
+    },
+    {
+      "name": "SSL Self-Signed Certificate",
+      "address": [
+        "192.168.1.43:3389",
+        "192.168.1.59:8080",
+        "192.168.1.59:8090"
+      ],
+      "id": "57582",
+      "cvss": "6.4"
+    },
+    {
+      "name": "TLS Version 1.0 Protocol Detection",
+      "address": [
+        "192.168.1.43:3389",
+        "192.168.30.227:3269",
+        "192.168.30.227:636"
+      ],
+      "id": "104743",
+      "cvss": "6.1"
+    },
+    {
+      "name": "TLS Version 1.1 Deprecated Protocol",
+      "address": [
+        "192.168.1.43:3389",
+        "192.168.30.227:3269",
+        "192.168.30.227:636"
+      ],
+      "id": "157288",
+      "cvss": "6.1"
+    }
+  ],
+  "Low": [
+    {
+      "name": "ICMP Timestamp Request Remote Date Disclosure",
+      "address": [
+        "192.168.1.244:0",
+        "192.168.1.59:0",
+        "192.168.30.224:0"
+      ],
+      "id": "10114",
+      "cvss": "2.1"
+    }
+  ]
+}

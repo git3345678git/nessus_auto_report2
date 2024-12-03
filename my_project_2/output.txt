@@ -1,0 +1,95 @@
+Critical
+aaaaaaaaRedis Server Unprotected by Password Authentication
+bbbbbbbb100634
+cccccccc7.5
+dddddddd192.168.1.59:6379
+aaaaaaaaSSL Version 2 and 3 Protocol Detection
+bbbbbbbb20007
+cccccccc10.0
+dddddddd192.168.30.227:3269
+dddddddd192.168.30.227:636
+High
+aaaaaaaaMicrosoft Windows LAN Manager SNMP LanMan Services Disclosure
+bbbbbbbb10547
+cccccccc7.5
+dddddddd192.168.1.43:161
+aaaaaaaaMongoDB 5.0.x < 5.0.25 / 6.0.x < 6.0.14 / 7.0.x < 7.0.6 Improper Input Validation (SERVER-85263)
+bbbbbbbb197879
+cccccccc5.0
+dddddddd192.168.1.59:27017
+aaaaaaaaSNMP Agent Default Community Name (public)
+bbbbbbbb41028
+cccccccc7.5
+dddddddd192.168.1.43:161
+aaaaaaaaSSL Certificate Signed Using Weak Hashing Algorithm
+bbbbbbbb35291
+cccccccc5.0
+dddddddd192.168.30.227:3269
+dddddddd192.168.30.227:636
+aaaaaaaaSSL Medium Strength Cipher Suites Supported (SWEET32)
+bbbbbbbb42873
+cccccccc5.0
+dddddddd192.168.1.43:3389
+dddddddd192.168.30.227:3269
+dddddddd192.168.30.227:636
+Medium
+aaaaaaaaJQuery 1.2 < 3.5.0 Multiple XSS
+bbbbbbbb136929
+cccccccc4.3
+dddddddd192.168.1.244:8080
+aaaaaaaaMicrosoft Windows LAN Manager SNMP LanMan Users Disclosure
+bbbbbbbb10546
+cccccccc5.0
+dddddddd192.168.1.43:161
+aaaaaaaaSMB Signing not required
+bbbbbbbb57608
+cccccccc5.0
+dddddddd192.168.1.18:445
+dddddddd192.168.1.20:445
+dddddddd192.168.1.5:445
+dddddddd192.168.1.7:445
+dddddddd192.168.30.224:445
+dddddddd192.168.30.229:445
+aaaaaaaaSSL Certificate Cannot Be Trusted
+bbbbbbbb51192
+cccccccc6.4
+dddddddd192.168.1.43:3389
+dddddddd192.168.1.59:8080
+dddddddd192.168.1.59:8090
+dddddddd192.168.30.227:3269
+dddddddd192.168.30.227:636
+aaaaaaaaSSL RC4 Cipher Suites Supported (Bar Mitzvah)
+bbbbbbbb65821
+cccccccc4.3
+dddddddd192.168.30.227:3269
+dddddddd192.168.30.227:636
+aaaaaaaaSSL Self-Signed Certificate
+bbbbbbbb57582
+cccccccc6.4
+dddddddd192.168.1.43:3389
+dddddddd192.168.1.59:8080
+dddddddd192.168.1.59:8090
+aaaaaaaaTLS Version 1.0 Protocol Detection
+bbbbbbbb104743
+cccccccc6.1
+dddddddd192.168.1.43:3389
+dddddddd192.168.30.227:3269
+dddddddd192.168.30.227:636
+aaaaaaaaTLS Version 1.1 Deprecated Protocol
+bbbbbbbb157288
+cccccccc6.1
+dddddddd192.168.1.43:3389
+dddddddd192.168.30.227:3269
+dddddddd192.168.30.227:636
+Low
+aaaaaaaaICMP Timestamp Request Remote Date Disclosure
+bbbbbbbb10114
+cccccccc2.1
+dddddddd192.168.1.244:0
+dddddddd192.168.1.59:0
+dddddddd192.168.30.224:0
+(空白)
+(空白)
+(空白)
+(空白)
+(空白)

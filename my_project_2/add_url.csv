@@ -1,0 +1,1486 @@
+﻿Plugin ID,CVE,CVSS v2.0 Base Score,Risk,Host,Protocol,Port,Name,Synopsis,Description,Solution,See Also,Plugin Output,nessus_url
+42873,CVE-2016-2183,5.0,High,192.168.1.5,tcp,3389.0,SSL Medium Strength Cipher Suites Supported (SWEET32),The remote service supports the use of medium strength SSL ciphers.,"The remote host supports the use of SSL ciphers that offer medium
+strength encryption. Nessus regards medium strength as any encryption
+that uses key lengths at least 64 bits and less than 112 bits, or 
+else that uses the 3DES encryption suite.
+
+Note that it is considerably easier to circumvent medium strength
+encryption if the attacker is on the same physical network.","Reconfigure the affected application if possible to avoid use of
+medium strength ciphers.","https://www.openssl.org/blog/blog/2016/08/24/sweet32/
+https://sweet32.info","
+  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DES-CBC3-SHA                  0x00, 0x0A       RSA           RSA      3DES-CBC(168)          SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/42873
+51192,,6.4,Medium,192.168.1.5,tcp,3389.0,SSL Certificate Cannot Be Trusted,The SSL certificate for this service cannot be trusted.,"The server's X.509 certificate cannot be trusted. This situation can
+occur in three different ways, in which the chain of trust can be
+broken, as stated below :
+
+  - First, the top of the certificate chain sent by the
+    server might not be descended from a known public
+    certificate authority. This can occur either when the
+    top of the chain is an unrecognized, self-signed
+    certificate, or when intermediate certificates are
+    missing that would connect the top of the certificate
+    chain to a known public certificate authority.
+
+  - Second, the certificate chain may contain a certificate
+    that is not valid at the time of the scan. This can
+    occur either when the scan occurs before one of the
+    certificate's 'notBefore' dates, or after one of the
+    certificate's 'notAfter' dates.
+
+  - Third, the certificate chain may contain a signature
+    that either didn't match the certificate's information
+    or could not be verified. Bad signatures can be fixed by
+    getting the certificate with the bad signature to be
+    re-signed by its issuer. Signatures that could not be
+    verified are the result of the certificate's issuer
+    using a signing algorithm that Nessus either does not
+    support or does not recognize.
+
+If the remote host is a public host in production, any break in the
+chain makes it more difficult for users to verify the authenticity and 
+identity of the web server. This could make it easier to carry out 
+man-in-the-middle attacks against the remote host.",Purchase or generate a proper SSL certificate for this service.,"https://www.itu.int/rec/T-REC-X.509/en
+https://en.wikipedia.org/wiki/X.509","
+The following certificate was at the top of the certificate
+chain sent by the remote host, but it is signed by an unknown
+certificate authority :
+
+|-Subject : CN=CSI-HV5.chsi.local
+|-Issuer  : CN=CSI-HV5.chsi.local
+",https://zh-tw.tenable.com/plugins/nessus/51192
+57582,,6.4,Medium,192.168.1.5,tcp,3389.0,SSL Self-Signed Certificate,"The SSL certificate chain for this service ends in an unrecognized
+self-signed certificate.","The X.509 certificate chain for this service is not signed by a
+recognized certificate authority.  If the remote host is a public host
+in production, this nullifies the use of SSL as anyone could establish
+a man-in-the-middle attack against the remote host. 
+
+Note that this plugin does not check for certificate chains that end
+in a certificate that is not self-signed, but is signed by an
+unrecognized certificate authority.",Purchase or generate a proper SSL certificate for this service.,,"
+The following certificate was found at the top of the certificate
+chain sent by the remote host, but is self-signed and was not
+found in the list of known certificate authorities :
+
+|-Subject : CN=CSI-HV5.chsi.local
+",https://zh-tw.tenable.com/plugins/nessus/57582
+57608,,5.0,Medium,192.168.1.5,tcp,445.0,SMB Signing not required,Signing is not required on the remote SMB server.,"Signing is not required on the remote SMB server. An unauthenticated,
+remote attacker can exploit this to conduct man-in-the-middle attacks
+against the SMB server.","Enforce message signing in the host's configuration. On Windows, this
+is found in the policy setting 'Microsoft network server: Digitally
+sign communications (always)'. On Samba, the setting is called 'server
+signing'. See the 'see also' links for further details.","http://www.nessus.org/u?df39b8b3
+http://technet.microsoft.com/en-us/library/cc731957.aspx
+http://www.nessus.org/u?74b80723
+https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
+http://www.nessus.org/u?a3cac4ea",,https://zh-tw.tenable.com/plugins/nessus/57608
+104743,,6.1,Medium,192.168.1.5,tcp,3389.0,TLS Version 1.0 Protocol Detection,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.0. TLS 1.0 has a
+number of cryptographic design flaws. Modern implementations of TLS 1.0
+mitigate these problems, but newer versions of TLS like 1.2 and 1.3 are
+designed against these flaws and should be used whenever possible.
+
+As of March 31, 2020, Endpoints that arent enabled for TLS 1.2
+and higher will no longer function properly with major web browsers and major vendors.
+
+PCI DSS v3.2 requires that TLS 1.0 be disabled entirely by June 30,
+2018, except for POS POI terminals (and the SSL/TLS termination
+points to which they connect) that can be verified as not being
+susceptible to any known exploits.","Enable support for TLS 1.2 and 1.3, and disable support for TLS 1.0.",https://tools.ietf.org/html/draft-ietf-tls-oldversions-deprecate-00,TLSv1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/104743
+157288,,6.1,Medium,192.168.1.5,tcp,3389.0,TLS Version 1.1 Deprecated Protocol,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.1. TLS 1.1 lacks support for current and recommended
+cipher suites. Ciphers that support encryption before MAC computation, and authenticated encryption modes such as GCM
+cannot be used with TLS 1.1
+
+As of March 31, 2020, Endpoints that are not enabled for TLS 1.2 and higher will no longer function properly with major
+web browsers and major vendors.","Enable support for TLS 1.2 and/or 1.3, and disable support for TLS 1.1.","https://datatracker.ietf.org/doc/html/rfc8996
+http://www.nessus.org/u?c8ae820d",TLSv1.1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/157288
+57608,,5.0,Medium,192.168.1.7,tcp,445.0,SMB Signing not required,Signing is not required on the remote SMB server.,"Signing is not required on the remote SMB server. An unauthenticated,
+remote attacker can exploit this to conduct man-in-the-middle attacks
+against the SMB server.","Enforce message signing in the host's configuration. On Windows, this
+is found in the policy setting 'Microsoft network server: Digitally
+sign communications (always)'. On Samba, the setting is called 'server
+signing'. See the 'see also' links for further details.","http://www.nessus.org/u?df39b8b3
+http://technet.microsoft.com/en-us/library/cc731957.aspx
+http://www.nessus.org/u?74b80723
+https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
+http://www.nessus.org/u?a3cac4ea",,https://zh-tw.tenable.com/plugins/nessus/57608
+42873,CVE-2016-2183,5.0,High,192.168.1.11,tcp,3389.0,SSL Medium Strength Cipher Suites Supported (SWEET32),The remote service supports the use of medium strength SSL ciphers.,"The remote host supports the use of SSL ciphers that offer medium
+strength encryption. Nessus regards medium strength as any encryption
+that uses key lengths at least 64 bits and less than 112 bits, or 
+else that uses the 3DES encryption suite.
+
+Note that it is considerably easier to circumvent medium strength
+encryption if the attacker is on the same physical network.","Reconfigure the affected application if possible to avoid use of
+medium strength ciphers.","https://www.openssl.org/blog/blog/2016/08/24/sweet32/
+https://sweet32.info","
+  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DES-CBC3-SHA                  0x00, 0x0A       RSA           RSA      3DES-CBC(168)          SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/42873
+51192,,6.4,Medium,192.168.1.11,tcp,3389.0,SSL Certificate Cannot Be Trusted,The SSL certificate for this service cannot be trusted.,"The server's X.509 certificate cannot be trusted. This situation can
+occur in three different ways, in which the chain of trust can be
+broken, as stated below :
+
+  - First, the top of the certificate chain sent by the
+    server might not be descended from a known public
+    certificate authority. This can occur either when the
+    top of the chain is an unrecognized, self-signed
+    certificate, or when intermediate certificates are
+    missing that would connect the top of the certificate
+    chain to a known public certificate authority.
+
+  - Second, the certificate chain may contain a certificate
+    that is not valid at the time of the scan. This can
+    occur either when the scan occurs before one of the
+    certificate's 'notBefore' dates, or after one of the
+    certificate's 'notAfter' dates.
+
+  - Third, the certificate chain may contain a signature
+    that either didn't match the certificate's information
+    or could not be verified. Bad signatures can be fixed by
+    getting the certificate with the bad signature to be
+    re-signed by its issuer. Signatures that could not be
+    verified are the result of the certificate's issuer
+    using a signing algorithm that Nessus either does not
+    support or does not recognize.
+
+If the remote host is a public host in production, any break in the
+chain makes it more difficult for users to verify the authenticity and 
+identity of the web server. This could make it easier to carry out 
+man-in-the-middle attacks against the remote host.",Purchase or generate a proper SSL certificate for this service.,"https://www.itu.int/rec/T-REC-X.509/en
+https://en.wikipedia.org/wiki/X.509","
+The following certificate was at the top of the certificate
+chain sent by the remote host, but it is signed by an unknown
+certificate authority :
+
+|-Subject : CN=CSI-DAC.chsi.local
+|-Issuer  : CN=CSI-DAC.chsi.local
+",https://zh-tw.tenable.com/plugins/nessus/51192
+57582,,6.4,Medium,192.168.1.11,tcp,3389.0,SSL Self-Signed Certificate,"The SSL certificate chain for this service ends in an unrecognized
+self-signed certificate.","The X.509 certificate chain for this service is not signed by a
+recognized certificate authority.  If the remote host is a public host
+in production, this nullifies the use of SSL as anyone could establish
+a man-in-the-middle attack against the remote host. 
+
+Note that this plugin does not check for certificate chains that end
+in a certificate that is not self-signed, but is signed by an
+unrecognized certificate authority.",Purchase or generate a proper SSL certificate for this service.,,"
+The following certificate was found at the top of the certificate
+chain sent by the remote host, but is self-signed and was not
+found in the list of known certificate authorities :
+
+|-Subject : CN=CSI-DAC.chsi.local
+",https://zh-tw.tenable.com/plugins/nessus/57582
+104743,,6.1,Medium,192.168.1.11,tcp,3389.0,TLS Version 1.0 Protocol Detection,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.0. TLS 1.0 has a
+number of cryptographic design flaws. Modern implementations of TLS 1.0
+mitigate these problems, but newer versions of TLS like 1.2 and 1.3 are
+designed against these flaws and should be used whenever possible.
+
+As of March 31, 2020, Endpoints that arent enabled for TLS 1.2
+and higher will no longer function properly with major web browsers and major vendors.
+
+PCI DSS v3.2 requires that TLS 1.0 be disabled entirely by June 30,
+2018, except for POS POI terminals (and the SSL/TLS termination
+points to which they connect) that can be verified as not being
+susceptible to any known exploits.","Enable support for TLS 1.2 and 1.3, and disable support for TLS 1.0.",https://tools.ietf.org/html/draft-ietf-tls-oldversions-deprecate-00,TLSv1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/104743
+157288,,6.1,Medium,192.168.1.11,tcp,3389.0,TLS Version 1.1 Deprecated Protocol,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.1. TLS 1.1 lacks support for current and recommended
+cipher suites. Ciphers that support encryption before MAC computation, and authenticated encryption modes such as GCM
+cannot be used with TLS 1.1
+
+As of March 31, 2020, Endpoints that are not enabled for TLS 1.2 and higher will no longer function properly with major
+web browsers and major vendors.","Enable support for TLS 1.2 and/or 1.3, and disable support for TLS 1.1.","https://datatracker.ietf.org/doc/html/rfc8996
+http://www.nessus.org/u?c8ae820d",TLSv1.1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/157288
+57608,,5.0,Medium,192.168.1.18,tcp,445.0,SMB Signing not required,Signing is not required on the remote SMB server.,"Signing is not required on the remote SMB server. An unauthenticated,
+remote attacker can exploit this to conduct man-in-the-middle attacks
+against the SMB server.","Enforce message signing in the host's configuration. On Windows, this
+is found in the policy setting 'Microsoft network server: Digitally
+sign communications (always)'. On Samba, the setting is called 'server
+signing'. See the 'see also' links for further details.","http://www.nessus.org/u?df39b8b3
+http://technet.microsoft.com/en-us/library/cc731957.aspx
+http://www.nessus.org/u?74b80723
+https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
+http://www.nessus.org/u?a3cac4ea",,https://zh-tw.tenable.com/plugins/nessus/57608
+42873,CVE-2016-2183,5.0,High,192.168.1.20,tcp,3389.0,SSL Medium Strength Cipher Suites Supported (SWEET32),The remote service supports the use of medium strength SSL ciphers.,"The remote host supports the use of SSL ciphers that offer medium
+strength encryption. Nessus regards medium strength as any encryption
+that uses key lengths at least 64 bits and less than 112 bits, or 
+else that uses the 3DES encryption suite.
+
+Note that it is considerably easier to circumvent medium strength
+encryption if the attacker is on the same physical network.","Reconfigure the affected application if possible to avoid use of
+medium strength ciphers.","https://www.openssl.org/blog/blog/2016/08/24/sweet32/
+https://sweet32.info","
+  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DES-CBC3-SHA                  0x00, 0x0A       RSA           RSA      3DES-CBC(168)          SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/42873
+51192,,6.4,Medium,192.168.1.20,tcp,3389.0,SSL Certificate Cannot Be Trusted,The SSL certificate for this service cannot be trusted.,"The server's X.509 certificate cannot be trusted. This situation can
+occur in three different ways, in which the chain of trust can be
+broken, as stated below :
+
+  - First, the top of the certificate chain sent by the
+    server might not be descended from a known public
+    certificate authority. This can occur either when the
+    top of the chain is an unrecognized, self-signed
+    certificate, or when intermediate certificates are
+    missing that would connect the top of the certificate
+    chain to a known public certificate authority.
+
+  - Second, the certificate chain may contain a certificate
+    that is not valid at the time of the scan. This can
+    occur either when the scan occurs before one of the
+    certificate's 'notBefore' dates, or after one of the
+    certificate's 'notAfter' dates.
+
+  - Third, the certificate chain may contain a signature
+    that either didn't match the certificate's information
+    or could not be verified. Bad signatures can be fixed by
+    getting the certificate with the bad signature to be
+    re-signed by its issuer. Signatures that could not be
+    verified are the result of the certificate's issuer
+    using a signing algorithm that Nessus either does not
+    support or does not recognize.
+
+If the remote host is a public host in production, any break in the
+chain makes it more difficult for users to verify the authenticity and 
+identity of the web server. This could make it easier to carry out 
+man-in-the-middle attacks against the remote host.",Purchase or generate a proper SSL certificate for this service.,"https://www.itu.int/rec/T-REC-X.509/en
+https://en.wikipedia.org/wiki/X.509","
+The following certificate was at the top of the certificate
+chain sent by the remote host, but it is signed by an unknown
+certificate authority :
+
+|-Subject : CN=CSI-KSC.chsi.local
+|-Issuer  : CN=CSI-KSC.chsi.local
+",https://zh-tw.tenable.com/plugins/nessus/51192
+57582,,6.4,Medium,192.168.1.20,tcp,3389.0,SSL Self-Signed Certificate,"The SSL certificate chain for this service ends in an unrecognized
+self-signed certificate.","The X.509 certificate chain for this service is not signed by a
+recognized certificate authority.  If the remote host is a public host
+in production, this nullifies the use of SSL as anyone could establish
+a man-in-the-middle attack against the remote host. 
+
+Note that this plugin does not check for certificate chains that end
+in a certificate that is not self-signed, but is signed by an
+unrecognized certificate authority.",Purchase or generate a proper SSL certificate for this service.,,"
+The following certificate was found at the top of the certificate
+chain sent by the remote host, but is self-signed and was not
+found in the list of known certificate authorities :
+
+|-Subject : CN=CSI-KSC.chsi.local
+",https://zh-tw.tenable.com/plugins/nessus/57582
+57608,,5.0,Medium,192.168.1.20,tcp,445.0,SMB Signing not required,Signing is not required on the remote SMB server.,"Signing is not required on the remote SMB server. An unauthenticated,
+remote attacker can exploit this to conduct man-in-the-middle attacks
+against the SMB server.","Enforce message signing in the host's configuration. On Windows, this
+is found in the policy setting 'Microsoft network server: Digitally
+sign communications (always)'. On Samba, the setting is called 'server
+signing'. See the 'see also' links for further details.","http://www.nessus.org/u?df39b8b3
+http://technet.microsoft.com/en-us/library/cc731957.aspx
+http://www.nessus.org/u?74b80723
+https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
+http://www.nessus.org/u?a3cac4ea",,https://zh-tw.tenable.com/plugins/nessus/57608
+104743,,6.1,Medium,192.168.1.20,tcp,3389.0,TLS Version 1.0 Protocol Detection,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.0. TLS 1.0 has a
+number of cryptographic design flaws. Modern implementations of TLS 1.0
+mitigate these problems, but newer versions of TLS like 1.2 and 1.3 are
+designed against these flaws and should be used whenever possible.
+
+As of March 31, 2020, Endpoints that arent enabled for TLS 1.2
+and higher will no longer function properly with major web browsers and major vendors.
+
+PCI DSS v3.2 requires that TLS 1.0 be disabled entirely by June 30,
+2018, except for POS POI terminals (and the SSL/TLS termination
+points to which they connect) that can be verified as not being
+susceptible to any known exploits.","Enable support for TLS 1.2 and 1.3, and disable support for TLS 1.0.",https://tools.ietf.org/html/draft-ietf-tls-oldversions-deprecate-00,TLSv1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/104743
+157288,,6.1,Medium,192.168.1.20,tcp,3389.0,TLS Version 1.1 Deprecated Protocol,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.1. TLS 1.1 lacks support for current and recommended
+cipher suites. Ciphers that support encryption before MAC computation, and authenticated encryption modes such as GCM
+cannot be used with TLS 1.1
+
+As of March 31, 2020, Endpoints that are not enabled for TLS 1.2 and higher will no longer function properly with major
+web browsers and major vendors.","Enable support for TLS 1.2 and/or 1.3, and disable support for TLS 1.1.","https://datatracker.ietf.org/doc/html/rfc8996
+http://www.nessus.org/u?c8ae820d",TLSv1.1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/157288
+10546,CVE-1999-0499,5.0,Medium,192.168.1.43,udp,161.0,Microsoft Windows LAN Manager SNMP LanMan Users Disclosure,The list of LanMan users of the remote host can be obtained via SNMP.,"It is possible to obtain the list of LanMan users on the remote host
+	by sending SNMP requests with the OID 1.3.6.1.4.1.77.1.2.25.1.1
+
+	An attacker may use this information to gain more knowledge about the
+	target host.","Disable the SNMP service on the remote host if you do not use it, or
+	filter incoming UDP packets going to this port.",,"Guest
+defaultadmin
+DefaultAccount
+WDAGUtilityAccount
+",https://zh-tw.tenable.com/plugins/nessus/10546
+10547,CVE-1999-0499,7.5,High,192.168.1.43,udp,161.0,Microsoft Windows LAN Manager SNMP LanMan Services Disclosure,"The list of LanMan services running on the remote host can be obtained
+via SNMP.","It is possible to obtain the list of LanMan services on the remote
+host by sending SNMP requests with the OID 1.3.6.1.4.1.77.1.2.3.1.1
+
+An attacker may use this information to gain more knowledge about
+the target host.","Disable the SNMP service on the remote host if you do not use it,
+or filter incoming UDP packets going to this port.",,"Power
+Server
+Themes
+SysMain
+Netlogon
+IP Helper
+DNS Client
+DHCP Client
+SNMP 
+Time Broker
+Workstation
+User Manager
+Windows Time
+CoreMessaging
+Plug and Play
+Print Spooler
+Task Scheduler
+Secondary Logon
+Storage Service
+CNG Key Isolation
+COM+ Event System
+Windows Event Log
+IPsec Policy Agent
+Volume Shadow Copy
+é¡¯ç¤º
+Group Policy Client
+RPC Endpoint Mapper
+Web å¸³æç®¡ç
+Data Sharing Service
+Network List Service
+System Events Broker
+User Profile Service
+Base Filtering Engine
+Local Session Manager
+TCP/IP NetBIOS Helper
+Cryptographic Services
+Application Information
+Certificate Propagation
+Diagnostic Service Host
+Remote Desktop Services
+Microsoft Search in Bing
+Shell Hardware Detection
+State Repository Service
+Diagnostic Policy Service
+Hyper-V Heartbeat Service
+Network Connection Broker
+Security Accounts Manager
+Windows Defender Firewall
+Network Location Awareness
+Windows Connection Manager
+Windows Font Cache Service
+´æ Orchestrator 
+Remote Procedure Call (RPC)
+User Access Logging Service
+Windows Update Medic 
+Adobe Acrobat Update Service
+DCOM Server Process Launcher
+Microsoft Store å®
+Remote Desktop Configuration
+Hyper-V Data Exchange Service
+Windows ç®¡ç¡æ
+Windows åº¨æ
+Hyper-V Guest Shutdown Service
+å·²éç½®å¹³°æ
+Application Host Helper Service
+Network Store Interface Service
+Distributed Link Tracking Client
+Remote Access Connection Manager
+Windows ¨æç³»çµ±
+World Wide Web Publishing 
+System Event Notification Service
+Windows Management Instrumentation
+Distributed Transaction Coordinator
+IKE and AuthIP IPsec Keying Modules
+Hyper-V Time Synchronization Service
+Microsoft Office Click-to-Run Service
+Hyper-V ç£°å½±è¤£½è¦
+Background Tasks Infrastructure Service
+Program Compatibility Assistant Service
+Connected User Experiences and Telemetry
+Secure Socket Tunneling Protocol Service
+WinHTTP Web Proxy Auto-Discovery Service
+Windows Remote Management (WS-Management)
+¡å·´¯åå®ç®¡çä¸­åç¶²è·¯ä»
+Touch Keyboard and Handwriting Panel Service
+Kaspersky Seamless Update Service (KES.21.18)
+Kaspersky Endpoint Security  (KES.21.18)
+Remote Desktop Services UserMode Port Redirector
+",https://zh-tw.tenable.com/plugins/nessus/10547
+41028,CVE-1999-0517,7.5,High,192.168.1.43,udp,161.0,SNMP Agent Default Community Name (public),The community name of the remote SNMP server can be guessed.,"It is possible to obtain the default community name of the remote
+SNMP server.
+
+An attacker may use this information to gain more knowledge about the
+remote host, or to change the configuration of the remote system (if
+the default community allows such modifications).","Disable the SNMP service on the remote host if you do not use it.
+Either filter incoming UDP packets going to this port, or change the 
+default community string.",,"
+The remote SNMP server replies to the following default community
+string :
+
+public",https://zh-tw.tenable.com/plugins/nessus/41028
+42873,CVE-2016-2183,5.0,High,192.168.1.43,tcp,3389.0,SSL Medium Strength Cipher Suites Supported (SWEET32),The remote service supports the use of medium strength SSL ciphers.,"The remote host supports the use of SSL ciphers that offer medium
+strength encryption. Nessus regards medium strength as any encryption
+that uses key lengths at least 64 bits and less than 112 bits, or 
+else that uses the 3DES encryption suite.
+
+Note that it is considerably easier to circumvent medium strength
+encryption if the attacker is on the same physical network.","Reconfigure the affected application if possible to avoid use of
+medium strength ciphers.","https://www.openssl.org/blog/blog/2016/08/24/sweet32/
+https://sweet32.info","
+  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DES-CBC3-SHA                  0x00, 0x0A       RSA           RSA      3DES-CBC(168)          SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/42873
+51192,,6.4,Medium,192.168.1.43,tcp,3389.0,SSL Certificate Cannot Be Trusted,The SSL certificate for this service cannot be trusted.,"The server's X.509 certificate cannot be trusted. This situation can
+occur in three different ways, in which the chain of trust can be
+broken, as stated below :
+
+  - First, the top of the certificate chain sent by the
+    server might not be descended from a known public
+    certificate authority. This can occur either when the
+    top of the chain is an unrecognized, self-signed
+    certificate, or when intermediate certificates are
+    missing that would connect the top of the certificate
+    chain to a known public certificate authority.
+
+  - Second, the certificate chain may contain a certificate
+    that is not valid at the time of the scan. This can
+    occur either when the scan occurs before one of the
+    certificate's 'notBefore' dates, or after one of the
+    certificate's 'notAfter' dates.
+
+  - Third, the certificate chain may contain a signature
+    that either didn't match the certificate's information
+    or could not be verified. Bad signatures can be fixed by
+    getting the certificate with the bad signature to be
+    re-signed by its issuer. Signatures that could not be
+    verified are the result of the certificate's issuer
+    using a signing algorithm that Nessus either does not
+    support or does not recognize.
+
+If the remote host is a public host in production, any break in the
+chain makes it more difficult for users to verify the authenticity and 
+identity of the web server. This could make it easier to carry out 
+man-in-the-middle attacks against the remote host.",Purchase or generate a proper SSL certificate for this service.,"https://www.itu.int/rec/T-REC-X.509/en
+https://en.wikipedia.org/wiki/X.509","
+The following certificate was at the top of the certificate
+chain sent by the remote host, but it is signed by an unknown
+certificate authority :
+
+|-Subject : CN=CSI-JS.chsi.local
+|-Issuer  : CN=CSI-JS.chsi.local
+",https://zh-tw.tenable.com/plugins/nessus/51192
+57582,,6.4,Medium,192.168.1.43,tcp,3389.0,SSL Self-Signed Certificate,"The SSL certificate chain for this service ends in an unrecognized
+self-signed certificate.","The X.509 certificate chain for this service is not signed by a
+recognized certificate authority.  If the remote host is a public host
+in production, this nullifies the use of SSL as anyone could establish
+a man-in-the-middle attack against the remote host. 
+
+Note that this plugin does not check for certificate chains that end
+in a certificate that is not self-signed, but is signed by an
+unrecognized certificate authority.",Purchase or generate a proper SSL certificate for this service.,,"
+The following certificate was found at the top of the certificate
+chain sent by the remote host, but is self-signed and was not
+found in the list of known certificate authorities :
+
+|-Subject : CN=CSI-JS.chsi.local
+",https://zh-tw.tenable.com/plugins/nessus/57582
+104743,,6.1,Medium,192.168.1.43,tcp,3389.0,TLS Version 1.0 Protocol Detection,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.0. TLS 1.0 has a
+number of cryptographic design flaws. Modern implementations of TLS 1.0
+mitigate these problems, but newer versions of TLS like 1.2 and 1.3 are
+designed against these flaws and should be used whenever possible.
+
+As of March 31, 2020, Endpoints that arent enabled for TLS 1.2
+and higher will no longer function properly with major web browsers and major vendors.
+
+PCI DSS v3.2 requires that TLS 1.0 be disabled entirely by June 30,
+2018, except for POS POI terminals (and the SSL/TLS termination
+points to which they connect) that can be verified as not being
+susceptible to any known exploits.","Enable support for TLS 1.2 and 1.3, and disable support for TLS 1.0.",https://tools.ietf.org/html/draft-ietf-tls-oldversions-deprecate-00,TLSv1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/104743
+157288,,6.1,Medium,192.168.1.43,tcp,3389.0,TLS Version 1.1 Deprecated Protocol,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.1. TLS 1.1 lacks support for current and recommended
+cipher suites. Ciphers that support encryption before MAC computation, and authenticated encryption modes such as GCM
+cannot be used with TLS 1.1
+
+As of March 31, 2020, Endpoints that are not enabled for TLS 1.2 and higher will no longer function properly with major
+web browsers and major vendors.","Enable support for TLS 1.2 and/or 1.3, and disable support for TLS 1.1.","https://datatracker.ietf.org/doc/html/rfc8996
+http://www.nessus.org/u?c8ae820d",TLSv1.1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/157288
+10114,CVE-1999-0524,2.1,Low,192.168.1.59,icmp,0.0,ICMP Timestamp Request Remote Date Disclosure,It is possible to determine the exact time set on the remote host.,"The remote host answers to an ICMP timestamp request.  This allows an
+attacker to know the date that is set on the targeted machine, which
+may assist an unauthenticated, remote attacker in defeating time-based
+authentication protocols.
+
+Timestamps returned from machines running Windows Vista / 7 / 2008 /
+2008 R2 are deliberately incorrect, but usually within 1000 seconds of
+the actual system time.","Filter out the ICMP timestamp requests (13), and the outgoing ICMP
+timestamp replies (14).",,"The difference between the local and remote clocks is 1 second.
+",https://zh-tw.tenable.com/plugins/nessus/10114
+51192,,6.4,Medium,192.168.1.59,tcp,8080.0,SSL Certificate Cannot Be Trusted,The SSL certificate for this service cannot be trusted.,"The server's X.509 certificate cannot be trusted. This situation can
+occur in three different ways, in which the chain of trust can be
+broken, as stated below :
+
+  - First, the top of the certificate chain sent by the
+    server might not be descended from a known public
+    certificate authority. This can occur either when the
+    top of the chain is an unrecognized, self-signed
+    certificate, or when intermediate certificates are
+    missing that would connect the top of the certificate
+    chain to a known public certificate authority.
+
+  - Second, the certificate chain may contain a certificate
+    that is not valid at the time of the scan. This can
+    occur either when the scan occurs before one of the
+    certificate's 'notBefore' dates, or after one of the
+    certificate's 'notAfter' dates.
+
+  - Third, the certificate chain may contain a signature
+    that either didn't match the certificate's information
+    or could not be verified. Bad signatures can be fixed by
+    getting the certificate with the bad signature to be
+    re-signed by its issuer. Signatures that could not be
+    verified are the result of the certificate's issuer
+    using a signing algorithm that Nessus either does not
+    support or does not recognize.
+
+If the remote host is a public host in production, any break in the
+chain makes it more difficult for users to verify the authenticity and 
+identity of the web server. This could make it easier to carry out 
+man-in-the-middle attacks against the remote host.",Purchase or generate a proper SSL certificate for this service.,"https://www.itu.int/rec/T-REC-X.509/en
+https://en.wikipedia.org/wiki/X.509","
+The following certificate was at the top of the certificate
+chain sent by the remote host, but it is signed by an unknown
+certificate authority :
+
+|-Subject : CN=TRAEFIK DEFAULT CERT
+|-Issuer  : CN=TRAEFIK DEFAULT CERT
+",https://zh-tw.tenable.com/plugins/nessus/51192
+51192,,6.4,Medium,192.168.1.59,tcp,8090.0,SSL Certificate Cannot Be Trusted,The SSL certificate for this service cannot be trusted.,"The server's X.509 certificate cannot be trusted. This situation can
+occur in three different ways, in which the chain of trust can be
+broken, as stated below :
+
+  - First, the top of the certificate chain sent by the
+    server might not be descended from a known public
+    certificate authority. This can occur either when the
+    top of the chain is an unrecognized, self-signed
+    certificate, or when intermediate certificates are
+    missing that would connect the top of the certificate
+    chain to a known public certificate authority.
+
+  - Second, the certificate chain may contain a certificate
+    that is not valid at the time of the scan. This can
+    occur either when the scan occurs before one of the
+    certificate's 'notBefore' dates, or after one of the
+    certificate's 'notAfter' dates.
+
+  - Third, the certificate chain may contain a signature
+    that either didn't match the certificate's information
+    or could not be verified. Bad signatures can be fixed by
+    getting the certificate with the bad signature to be
+    re-signed by its issuer. Signatures that could not be
+    verified are the result of the certificate's issuer
+    using a signing algorithm that Nessus either does not
+    support or does not recognize.
+
+If the remote host is a public host in production, any break in the
+chain makes it more difficult for users to verify the authenticity and 
+identity of the web server. This could make it easier to carry out 
+man-in-the-middle attacks against the remote host.",Purchase or generate a proper SSL certificate for this service.,"https://www.itu.int/rec/T-REC-X.509/en
+https://en.wikipedia.org/wiki/X.509","
+The following certificate was at the top of the certificate
+chain sent by the remote host, but it is signed by an unknown
+certificate authority :
+
+|-Subject : CN=TRAEFIK DEFAULT CERT
+|-Issuer  : CN=TRAEFIK DEFAULT CERT
+",https://zh-tw.tenable.com/plugins/nessus/51192
+57582,,6.4,Medium,192.168.1.59,tcp,8080.0,SSL Self-Signed Certificate,"The SSL certificate chain for this service ends in an unrecognized
+self-signed certificate.","The X.509 certificate chain for this service is not signed by a
+recognized certificate authority.  If the remote host is a public host
+in production, this nullifies the use of SSL as anyone could establish
+a man-in-the-middle attack against the remote host. 
+
+Note that this plugin does not check for certificate chains that end
+in a certificate that is not self-signed, but is signed by an
+unrecognized certificate authority.",Purchase or generate a proper SSL certificate for this service.,,"
+The following certificate was found at the top of the certificate
+chain sent by the remote host, but is self-signed and was not
+found in the list of known certificate authorities :
+
+|-Subject : CN=TRAEFIK DEFAULT CERT
+",https://zh-tw.tenable.com/plugins/nessus/57582
+57582,,6.4,Medium,192.168.1.59,tcp,8090.0,SSL Self-Signed Certificate,"The SSL certificate chain for this service ends in an unrecognized
+self-signed certificate.","The X.509 certificate chain for this service is not signed by a
+recognized certificate authority.  If the remote host is a public host
+in production, this nullifies the use of SSL as anyone could establish
+a man-in-the-middle attack against the remote host. 
+
+Note that this plugin does not check for certificate chains that end
+in a certificate that is not self-signed, but is signed by an
+unrecognized certificate authority.",Purchase or generate a proper SSL certificate for this service.,,"
+The following certificate was found at the top of the certificate
+chain sent by the remote host, but is self-signed and was not
+found in the list of known certificate authorities :
+
+|-Subject : CN=TRAEFIK DEFAULT CERT
+",https://zh-tw.tenable.com/plugins/nessus/57582
+100634,,7.5,Critical,192.168.1.59,tcp,6379.0,Redis Server Unprotected by Password Authentication,A Redis server is not protected by password authentication.,"The Redis server running on the remote host is not protected by
+password authentication. A remote attacker can exploit this to gain
+unauthorized access to the server.","Enable the 'requirepass' directive in the redis.conf configuration
+file.",https://redis.io/commands/auth,"
+An unauthenticated INFO request to the Redis Server returned the following:
+
+
+# Server
+redis_version:6.0.20
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:dbdcb1f5eaf1bc2
+redis_mode:standalone
+os:Linux 6.1.0-1027-oem x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:atomic-builtin
+gcc_version:12.2.0
+process_id:1
+run_id:6d33ab047720156fd11e76a4d81e1cde5a0909a4
+tcp_port:6379
+uptime_in_seconds:699218
+uptime_in_days:8
+hz:10
+configured_hz:10
+lru_clock:4627466
+executable:/data/redis-server
+config_file:
+io_threads_active:0
+
+# Clients
+connected_clients:2
+client_recent_max_input_buffer:8
+client_recent_max_output_buffer:0
+blocked_clients:0
+tracking_clients:0
+clients_in_timeout_table:0
+
+# Memory
+used_memory:887912
+used_memory_human:867.10K
+used_memory_rss:9031680
+used_memory_rss_human:8.61M
+used_memory_peak:887912
+used_memory_peak_human:867.10K
+used_memory_peak_perc:100.00%
+used_memory_overhead:823672
+used_memory_startup:803168
+used_memory_dataset:64240
+used_memory_dataset_perc:75.80%
+allocator_allocated:878224
+allocator_active:1122304
+allocator_resident:5730304
+total_system_memory:134738898944
+total_system_memory_human:125.49G
+used_memory_lua:36864
+used_memory_lua_human:36.00K
+used_memory_scripts:0
+used_memory_scripts_human:0B
+number_of_cached_scripts:0
+maxmemory:0
+maxmemory_human:0B
+maxmemory_policy:noeviction
+allocator_frag_ratio:1.28
+allocator_frag_bytes:244080
+allocator_rss_ratio:5.11
+allocator_rss_bytes:4608000
+rss_overhead_ratio:1.58
+rss_overhead_bytes:3301376
+mem_fragmentation_ratio:10.96
+mem_fragmentation_bytes:8207288
+mem_not_counted_for_evict:0
+mem_replication_backlog:0
+mem_clients_slaves:0
+mem_clients_normal:20504
+mem_aof_buffer:0
+mem_allocator:jemalloc-5.1.0
+active_defrag_running:0
+lazyfree_pending_objects:0
+
+# Persistence
+loading:0
+rdb_changes_since_last_save:0
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1731981496
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:-1
+rdb_current_bgsave_time_sec:-1
+rdb_last_cow_size:0
+aof_enabled:0
+aof_rewrite_in_progress:0
+aof_rewrite_scheduled:0
+aof_last_rewrite_time_sec:-1
+aof_current_rewrite_time_sec:-1
+aof_last_bgrewrite_status:ok
+aof_last_write_status:ok
+aof_last_cow_size:0
+module_fork_in_progress:0
+module_fork_last_cow_size:0
+
+# Stats
+total_connections_received:647189
+total_commands_processed:647190
+instantaneous_ops_per_sec:0
+total_net_input_bytes:9060787
+total_net_output_bytes:4537867
+instantaneous_input_kbps:0.01
+instantaneous_output_kbps:0.00
+rejected_connections:0
+sync_full:0
+sync_partial_ok:0
+sync_partial_err:0
+expired_keys:0
+expired_stale_perc:0.00
+expired_time_cap_reached_count:0
+expire_cycle_cpu_milliseconds:13629
+evicted_keys:0
+keyspace_hits:0
+keyspace_misses:0
+pubsub_channels:1
+pubsub_patterns:0
+latest_fork_usec:0
+migrate_cached_sockets:0
+slave_expires_tracked_keys:0
+active_defrag_hits:0
+active_defrag_misses:0
+active_defrag_key_hits:0
+active_defrag_key_misses:0
+tracking_total_keys:0
+tracking_total_items:0
+tracking_total_prefixes:0
+unexpected_error_replies:0
+total_reads_processed:1294378
+total_writes_processed:647190
+io_threaded_reads_processed:0
+io_threaded_writes_processed:0
+
+# Replication
+role:master
+connected_slaves:0
+master_replid:b653b090cecc2687ca9570aace051192355deb59
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+# CPU
+used_cpu_sys:782.618086
+used_cpu_user:645.370284
+used_cpu_sys_children:0.000728
+used_cpu_user_children:0.000866
+
+# Modules
+
+# Cluster
+cluster_enabled:0
+
+# Keyspace
+",https://zh-tw.tenable.com/plugins/nessus/100634
+197879,CVE-2024-3372,5.0,High,192.168.1.59,tcp,27017.0,MongoDB 5.0.x < 5.0.25 / 6.0.x < 6.0.14 / 7.0.x < 7.0.6 Improper Input Validation (SERVER-85263),The remote host is missing a security update.,"The version of MongoDB installed on the remote host is prior to 5.0.25, 6.0.14, or 7.0.6. It is, therefore, affected by
+a vulnerability as referenced in the SERVER-85263 advisory.
+
+  - Improper validation of certain metadata input may result in the server not correctly serialising BSON.
+    This can be performed pre-authentication and may cause unexpected application behavior including
+    unavailability of serverStatus responses. This issue affects MongoDB Server v7.0 versions prior to 7.0.6,
+    MongoDB Server v6.0 versions prior to 6.0.14 and MongoDB Server v.5.0 versions prior to 5.0.25.
+    (CVE-2024-3372)
+
+Note that Nessus has not tested for this issue but has instead relied only on the application's self-reported version
+number.",Upgrade to MongoDB version 5.0.25 / 6.0.14 / 7.0.6 or later.,https://jira.mongodb.org/browse/SERVER-85263,"
+  URL               : http://192.168.1.59:27017/
+  Installed version : 7.0.2
+  Fixed version     : 7.0.6
+",https://zh-tw.tenable.com/plugins/nessus/197879
+209641,CVE-2024-8305,6.8,Medium,192.168.1.59,tcp,27017.0,MongoDB  6.0.x < 6.0.17 / 7.0.x < 7.0.13 / 7.3.x < 7.3.4 incorrect enforcement of index constraints (SERVER-92382),The remote host is missing a security update.,"The version of MongoDB installed on the remote host is prior to 6.0.17, 7.0.13 and 7.3.13. It is, therefore, affected by
+ a vulnerability as referenced in the SERVER-92382 advisory.
+
+  - PrepareUnique index may cause secondaries to crash due to incorrect enforcement of index constraints on 
+    secondaries, where in extreme cases may cause multiple secondaries crashing leading to no primaries. This issue 
+    affects MongoDB Server v6.0 versions prior to 6.0.17, MongoDB Server v7.0 versions prior to 7.0.13 and MongoDB 
+    Server v7.3 versions prior to 7.3.4 (CVE-2024-8305)
+
+  Note that Nessus has not tested for this issue but has instead relied only on the application's self-reported version
+  number.",Upgrade to MongoDB version 6.0.17 / 7.0.13 / 7.3.13 or later.,https://jira.mongodb.org/browse/SERVER-92382,"
+  URL               : http://192.168.1.59:27017/
+  Installed version : 7.0.2
+  Fixed version     : 7.0.13
+",https://zh-tw.tenable.com/plugins/nessus/209641
+10114,CVE-1999-0524,2.1,Low,192.168.1.244,icmp,0.0,ICMP Timestamp Request Remote Date Disclosure,It is possible to determine the exact time set on the remote host.,"The remote host answers to an ICMP timestamp request.  This allows an
+attacker to know the date that is set on the targeted machine, which
+may assist an unauthenticated, remote attacker in defeating time-based
+authentication protocols.
+
+Timestamps returned from machines running Windows Vista / 7 / 2008 /
+2008 R2 are deliberately incorrect, but usually within 1000 seconds of
+the actual system time.","Filter out the ICMP timestamp requests (13), and the outgoing ICMP
+timestamp replies (14).",,"The difference between the local and remote clocks is -18 seconds.
+",https://zh-tw.tenable.com/plugins/nessus/10114
+136929,CVE-2020-11022,4.3,Medium,192.168.1.244,tcp,8080.0,JQuery 1.2 < 3.5.0 Multiple XSS,"The remote web server is affected by multiple cross site scripting
+vulnerability.","According to the self-reported version in the script, the version of JQuery hosted on the remote web server is greater
+than or equal to 1.2 and prior to 3.5.0. It is, therefore, affected by multiple cross site scripting vulnerabilities.
+
+Note, the vulnerabilities referenced in this plugin have no security impact on PAN-OS, and/or the scenarios 
+required for successful exploitation do not exist on devices running a PAN-OS release.",Upgrade to JQuery version 3.5.0 or later.,"https://blog.jquery.com/2020/04/10/jquery-3-5-0-released/
+https://security.paloaltonetworks.com/PAN-SA-2020-0007","
+  URL               : http://192.168.1.244:8080/resources/js/jquery/jquery-1.11.0.min.js
+  Installed version : 1.11.0
+  Fixed version     : 3.5.0
+",https://zh-tw.tenable.com/plugins/nessus/136929
+136929,CVE-2020-11023,4.3,Medium,192.168.1.244,tcp,8080.0,JQuery 1.2 < 3.5.0 Multiple XSS,"The remote web server is affected by multiple cross site scripting
+vulnerability.","According to the self-reported version in the script, the version of JQuery hosted on the remote web server is greater
+than or equal to 1.2 and prior to 3.5.0. It is, therefore, affected by multiple cross site scripting vulnerabilities.
+
+Note, the vulnerabilities referenced in this plugin have no security impact on PAN-OS, and/or the scenarios 
+required for successful exploitation do not exist on devices running a PAN-OS release.",Upgrade to JQuery version 3.5.0 or later.,"https://blog.jquery.com/2020/04/10/jquery-3-5-0-released/
+https://security.paloaltonetworks.com/PAN-SA-2020-0007","
+  URL               : http://192.168.1.244:8080/resources/js/jquery/jquery-1.11.0.min.js
+  Installed version : 1.11.0
+  Fixed version     : 3.5.0
+",https://zh-tw.tenable.com/plugins/nessus/136929
+10114,CVE-1999-0524,2.1,Low,192.168.30.224,icmp,0.0,ICMP Timestamp Request Remote Date Disclosure,It is possible to determine the exact time set on the remote host.,"The remote host answers to an ICMP timestamp request.  This allows an
+attacker to know the date that is set on the targeted machine, which
+may assist an unauthenticated, remote attacker in defeating time-based
+authentication protocols.
+
+Timestamps returned from machines running Windows Vista / 7 / 2008 /
+2008 R2 are deliberately incorrect, but usually within 1000 seconds of
+the actual system time.","Filter out the ICMP timestamp requests (13), and the outgoing ICMP
+timestamp replies (14).",,"The ICMP timestamps seem to be in little endian format (not in network format)
+The remote clock is synchronized with the local clock.
+",https://zh-tw.tenable.com/plugins/nessus/10114
+57608,,5.0,Medium,192.168.30.224,tcp,445.0,SMB Signing not required,Signing is not required on the remote SMB server.,"Signing is not required on the remote SMB server. An unauthenticated,
+remote attacker can exploit this to conduct man-in-the-middle attacks
+against the SMB server.","Enforce message signing in the host's configuration. On Windows, this
+is found in the policy setting 'Microsoft network server: Digitally
+sign communications (always)'. On Samba, the setting is called 'server
+signing'. See the 'see also' links for further details.","http://www.nessus.org/u?df39b8b3
+http://technet.microsoft.com/en-us/library/cc731957.aspx
+http://www.nessus.org/u?74b80723
+https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
+http://www.nessus.org/u?a3cac4ea",,https://zh-tw.tenable.com/plugins/nessus/57608
+20007,,10.0,Critical,192.168.30.227,tcp,636.0,SSL Version 2 and 3 Protocol Detection,"The remote service encrypts traffic using a protocol with known
+weaknesses.","The remote service accepts connections encrypted using SSL 2.0 and/or
+SSL 3.0. These versions of SSL are affected by several cryptographic
+flaws, including:
+
+  - An insecure padding scheme with CBC ciphers.
+
+  - Insecure session renegotiation and resumption schemes.
+
+An attacker can exploit these flaws to conduct man-in-the-middle
+attacks or to decrypt communications between the affected service and
+clients.
+
+Although SSL/TLS has a secure means for choosing the highest supported
+version of the protocol (so that these versions will be used only if
+the client or server support nothing better), many web browsers
+implement this in an unsafe way that allows an attacker to downgrade
+a connection (such as in POODLE). Therefore, it is recommended that
+these protocols be disabled entirely.
+
+NIST has determined that SSL 3.0 is no longer acceptable for secure
+communications. As of the date of enforcement found in PCI DSS v3.1,
+any version of SSL will not meet the PCI SSC's definition of 'strong
+cryptography'.","Consult the application's documentation to disable SSL 2.0 and 3.0.
+Use TLS 1.2 (with approved cipher suites) or higher instead.","https://www.schneier.com/academic/paperfiles/paper-ssl.pdf
+http://www.nessus.org/u?b06c7e95
+http://www.nessus.org/u?247c4540
+https://www.openssl.org/~bodo/ssl-poodle.pdf
+http://www.nessus.org/u?5d15ba70
+https://www.imperialviolet.org/2014/10/14/poodle.html
+https://tools.ietf.org/html/rfc7507
+https://tools.ietf.org/html/rfc7568","
+- SSLv3 is enabled and the server supports at least one cipher.
+	Explanation: TLS 1.0 and SSL 3.0 cipher suites may be used with SSLv3
+
+
+  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DES-CBC3-SHA                                   RSA           RSA      3DES-CBC(168)          SHA1
+
+  High Strength Ciphers (>= 112-bit key)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DHE-RSA-AES128-SHA                             DH            RSA      AES-CBC(128)           SHA1
+    DHE-RSA-AES256-SHA                             DH            RSA      AES-CBC(256)           SHA1
+    ECDHE-RSA-AES128-SHA                           ECDH          RSA      AES-CBC(128)           SHA1
+    ECDHE-RSA-AES256-SHA                           ECDH          RSA      AES-CBC(256)           SHA1
+    AES128-SHA                                     RSA           RSA      AES-CBC(128)           SHA1
+    AES256-SHA                                     RSA           RSA      AES-CBC(256)           SHA1
+    RC4-MD5                                        RSA           RSA      RC4(128)               MD5
+    RC4-SHA                                        RSA           RSA      RC4(128)               SHA1
+    ECDHE-RSA-AES128-SHA256                        ECDH          RSA      AES-CBC(128)           SHA256
+    ECDHE-RSA-AES256-SHA384                        ECDH          RSA      AES-CBC(256)           SHA384
+    RSA-AES128-SHA256                              RSA           RSA      AES-CBC(128)           SHA256
+    RSA-AES256-SHA256                              RSA           RSA      AES-CBC(256)           SHA256
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/20007
+20007,,10.0,Critical,192.168.30.227,tcp,3269.0,SSL Version 2 and 3 Protocol Detection,"The remote service encrypts traffic using a protocol with known
+weaknesses.","The remote service accepts connections encrypted using SSL 2.0 and/or
+SSL 3.0. These versions of SSL are affected by several cryptographic
+flaws, including:
+
+  - An insecure padding scheme with CBC ciphers.
+
+  - Insecure session renegotiation and resumption schemes.
+
+An attacker can exploit these flaws to conduct man-in-the-middle
+attacks or to decrypt communications between the affected service and
+clients.
+
+Although SSL/TLS has a secure means for choosing the highest supported
+version of the protocol (so that these versions will be used only if
+the client or server support nothing better), many web browsers
+implement this in an unsafe way that allows an attacker to downgrade
+a connection (such as in POODLE). Therefore, it is recommended that
+these protocols be disabled entirely.
+
+NIST has determined that SSL 3.0 is no longer acceptable for secure
+communications. As of the date of enforcement found in PCI DSS v3.1,
+any version of SSL will not meet the PCI SSC's definition of 'strong
+cryptography'.","Consult the application's documentation to disable SSL 2.0 and 3.0.
+Use TLS 1.2 (with approved cipher suites) or higher instead.","https://www.schneier.com/academic/paperfiles/paper-ssl.pdf
+http://www.nessus.org/u?b06c7e95
+http://www.nessus.org/u?247c4540
+https://www.openssl.org/~bodo/ssl-poodle.pdf
+http://www.nessus.org/u?5d15ba70
+https://www.imperialviolet.org/2014/10/14/poodle.html
+https://tools.ietf.org/html/rfc7507
+https://tools.ietf.org/html/rfc7568","
+- SSLv3 is enabled and the server supports at least one cipher.
+	Explanation: TLS 1.0 and SSL 3.0 cipher suites may be used with SSLv3
+
+
+  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DES-CBC3-SHA                                   RSA           RSA      3DES-CBC(168)          SHA1
+
+  High Strength Ciphers (>= 112-bit key)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DHE-RSA-AES128-SHA                             DH            RSA      AES-CBC(128)           SHA1
+    DHE-RSA-AES256-SHA                             DH            RSA      AES-CBC(256)           SHA1
+    ECDHE-RSA-AES128-SHA                           ECDH          RSA      AES-CBC(128)           SHA1
+    ECDHE-RSA-AES256-SHA                           ECDH          RSA      AES-CBC(256)           SHA1
+    AES128-SHA                                     RSA           RSA      AES-CBC(128)           SHA1
+    AES256-SHA                                     RSA           RSA      AES-CBC(256)           SHA1
+    RC4-MD5                                        RSA           RSA      RC4(128)               MD5
+    RC4-SHA                                        RSA           RSA      RC4(128)               SHA1
+    ECDHE-RSA-AES128-SHA256                        ECDH          RSA      AES-CBC(128)           SHA256
+    ECDHE-RSA-AES256-SHA384                        ECDH          RSA      AES-CBC(256)           SHA384
+    RSA-AES128-SHA256                              RSA           RSA      AES-CBC(128)           SHA256
+    RSA-AES256-SHA256                              RSA           RSA      AES-CBC(256)           SHA256
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/20007
+35291,CVE-2004-2761,5.0,High,192.168.30.227,tcp,636.0,SSL Certificate Signed Using Weak Hashing Algorithm,"An SSL certificate in the certificate chain has been signed using a
+weak hash algorithm.","The remote service uses an SSL certificate chain that has been signed
+using a cryptographically weak hashing algorithm (e.g. MD2, MD4, MD5,
+or SHA1). These signature algorithms are known to be vulnerable to
+collision attacks. An attacker can exploit this to generate another
+certificate with the same digital signature, allowing an attacker to
+masquerade as the affected service.
+
+Note that this plugin reports all SSL certificate chains signed with
+SHA-1 that expire after January 1, 2017 as vulnerable. This is in
+accordance with Google's gradual sunsetting of the SHA-1 cryptographic
+hash algorithm.
+
+Note that certificates in the chain that are contained in the Nessus
+CA database (known_CA.inc) have been ignored.",Contact the Certificate Authority to have the SSL certificate reissued.,"https://tools.ietf.org/html/rfc3279
+http://www.nessus.org/u?9bb87bf2
+http://www.nessus.org/u?e120eea1
+http://www.nessus.org/u?5d894816
+http://www.nessus.org/u?51db68aa
+http://www.nessus.org/u?9dc7bfba","
+The following certificates were part of the certificate chain sent by
+the remote host, but contain hashes that are considered to be weak.
+
+Subject             : CN=CSI-DC3.chsi.local
+Signature Algorithm : SHA-1 With RSA Encryption
+Valid From          : Feb 05 01:39:03 2024 GMT
+Valid To            : Feb 04 01:39:03 2025 GMT
+Raw PEM certificate : 
+-----BEGIN CERTIFICATE-----
+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
+-----END CERTIFICATE-----
+",https://zh-tw.tenable.com/plugins/nessus/35291
+35291,CVE-2005-4900,5.0,High,192.168.30.227,tcp,636.0,SSL Certificate Signed Using Weak Hashing Algorithm,"An SSL certificate in the certificate chain has been signed using a
+weak hash algorithm.","The remote service uses an SSL certificate chain that has been signed
+using a cryptographically weak hashing algorithm (e.g. MD2, MD4, MD5,
+or SHA1). These signature algorithms are known to be vulnerable to
+collision attacks. An attacker can exploit this to generate another
+certificate with the same digital signature, allowing an attacker to
+masquerade as the affected service.
+
+Note that this plugin reports all SSL certificate chains signed with
+SHA-1 that expire after January 1, 2017 as vulnerable. This is in
+accordance with Google's gradual sunsetting of the SHA-1 cryptographic
+hash algorithm.
+
+Note that certificates in the chain that are contained in the Nessus
+CA database (known_CA.inc) have been ignored.",Contact the Certificate Authority to have the SSL certificate reissued.,"https://tools.ietf.org/html/rfc3279
+http://www.nessus.org/u?9bb87bf2
+http://www.nessus.org/u?e120eea1
+http://www.nessus.org/u?5d894816
+http://www.nessus.org/u?51db68aa
+http://www.nessus.org/u?9dc7bfba","
+The following certificates were part of the certificate chain sent by
+the remote host, but contain hashes that are considered to be weak.
+
+Subject             : CN=CSI-DC3.chsi.local
+Signature Algorithm : SHA-1 With RSA Encryption
+Valid From          : Feb 05 01:39:03 2024 GMT
+Valid To            : Feb 04 01:39:03 2025 GMT
+Raw PEM certificate : 
+-----BEGIN CERTIFICATE-----
+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
+-----END CERTIFICATE-----
+",https://zh-tw.tenable.com/plugins/nessus/35291
+35291,CVE-2004-2761,5.0,High,192.168.30.227,tcp,3269.0,SSL Certificate Signed Using Weak Hashing Algorithm,"An SSL certificate in the certificate chain has been signed using a
+weak hash algorithm.","The remote service uses an SSL certificate chain that has been signed
+using a cryptographically weak hashing algorithm (e.g. MD2, MD4, MD5,
+or SHA1). These signature algorithms are known to be vulnerable to
+collision attacks. An attacker can exploit this to generate another
+certificate with the same digital signature, allowing an attacker to
+masquerade as the affected service.
+
+Note that this plugin reports all SSL certificate chains signed with
+SHA-1 that expire after January 1, 2017 as vulnerable. This is in
+accordance with Google's gradual sunsetting of the SHA-1 cryptographic
+hash algorithm.
+
+Note that certificates in the chain that are contained in the Nessus
+CA database (known_CA.inc) have been ignored.",Contact the Certificate Authority to have the SSL certificate reissued.,"https://tools.ietf.org/html/rfc3279
+http://www.nessus.org/u?9bb87bf2
+http://www.nessus.org/u?e120eea1
+http://www.nessus.org/u?5d894816
+http://www.nessus.org/u?51db68aa
+http://www.nessus.org/u?9dc7bfba","
+The following certificates were part of the certificate chain sent by
+the remote host, but contain hashes that are considered to be weak.
+
+Subject             : CN=CSI-DC3.chsi.local
+Signature Algorithm : SHA-1 With RSA Encryption
+Valid From          : Feb 05 01:39:03 2024 GMT
+Valid To            : Feb 04 01:39:03 2025 GMT
+Raw PEM certificate : 
+-----BEGIN CERTIFICATE-----
+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
+-----END CERTIFICATE-----
+",https://zh-tw.tenable.com/plugins/nessus/35291
+35291,CVE-2005-4900,5.0,High,192.168.30.227,tcp,3269.0,SSL Certificate Signed Using Weak Hashing Algorithm,"An SSL certificate in the certificate chain has been signed using a
+weak hash algorithm.","The remote service uses an SSL certificate chain that has been signed
+using a cryptographically weak hashing algorithm (e.g. MD2, MD4, MD5,
+or SHA1). These signature algorithms are known to be vulnerable to
+collision attacks. An attacker can exploit this to generate another
+certificate with the same digital signature, allowing an attacker to
+masquerade as the affected service.
+
+Note that this plugin reports all SSL certificate chains signed with
+SHA-1 that expire after January 1, 2017 as vulnerable. This is in
+accordance with Google's gradual sunsetting of the SHA-1 cryptographic
+hash algorithm.
+
+Note that certificates in the chain that are contained in the Nessus
+CA database (known_CA.inc) have been ignored.",Contact the Certificate Authority to have the SSL certificate reissued.,"https://tools.ietf.org/html/rfc3279
+http://www.nessus.org/u?9bb87bf2
+http://www.nessus.org/u?e120eea1
+http://www.nessus.org/u?5d894816
+http://www.nessus.org/u?51db68aa
+http://www.nessus.org/u?9dc7bfba","
+The following certificates were part of the certificate chain sent by
+the remote host, but contain hashes that are considered to be weak.
+
+Subject             : CN=CSI-DC3.chsi.local
+Signature Algorithm : SHA-1 With RSA Encryption
+Valid From          : Feb 05 01:39:03 2024 GMT
+Valid To            : Feb 04 01:39:03 2025 GMT
+Raw PEM certificate : 
+-----BEGIN CERTIFICATE-----
+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
+-----END CERTIFICATE-----
+",https://zh-tw.tenable.com/plugins/nessus/35291
+42873,CVE-2016-2183,5.0,High,192.168.30.227,tcp,636.0,SSL Medium Strength Cipher Suites Supported (SWEET32),The remote service supports the use of medium strength SSL ciphers.,"The remote host supports the use of SSL ciphers that offer medium
+strength encryption. Nessus regards medium strength as any encryption
+that uses key lengths at least 64 bits and less than 112 bits, or 
+else that uses the 3DES encryption suite.
+
+Note that it is considerably easier to circumvent medium strength
+encryption if the attacker is on the same physical network.","Reconfigure the affected application if possible to avoid use of
+medium strength ciphers.","https://www.openssl.org/blog/blog/2016/08/24/sweet32/
+https://sweet32.info","
+  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DES-CBC3-SHA                  0x00, 0x0A       RSA           RSA      3DES-CBC(168)          SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/42873
+42873,CVE-2016-2183,5.0,High,192.168.30.227,tcp,3269.0,SSL Medium Strength Cipher Suites Supported (SWEET32),The remote service supports the use of medium strength SSL ciphers.,"The remote host supports the use of SSL ciphers that offer medium
+strength encryption. Nessus regards medium strength as any encryption
+that uses key lengths at least 64 bits and less than 112 bits, or 
+else that uses the 3DES encryption suite.
+
+Note that it is considerably easier to circumvent medium strength
+encryption if the attacker is on the same physical network.","Reconfigure the affected application if possible to avoid use of
+medium strength ciphers.","https://www.openssl.org/blog/blog/2016/08/24/sweet32/
+https://sweet32.info","
+  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    DES-CBC3-SHA                  0x00, 0x0A       RSA           RSA      3DES-CBC(168)          SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/42873
+51192,,6.4,Medium,192.168.30.227,tcp,636.0,SSL Certificate Cannot Be Trusted,The SSL certificate for this service cannot be trusted.,"The server's X.509 certificate cannot be trusted. This situation can
+occur in three different ways, in which the chain of trust can be
+broken, as stated below :
+
+  - First, the top of the certificate chain sent by the
+    server might not be descended from a known public
+    certificate authority. This can occur either when the
+    top of the chain is an unrecognized, self-signed
+    certificate, or when intermediate certificates are
+    missing that would connect the top of the certificate
+    chain to a known public certificate authority.
+
+  - Second, the certificate chain may contain a certificate
+    that is not valid at the time of the scan. This can
+    occur either when the scan occurs before one of the
+    certificate's 'notBefore' dates, or after one of the
+    certificate's 'notAfter' dates.
+
+  - Third, the certificate chain may contain a signature
+    that either didn't match the certificate's information
+    or could not be verified. Bad signatures can be fixed by
+    getting the certificate with the bad signature to be
+    re-signed by its issuer. Signatures that could not be
+    verified are the result of the certificate's issuer
+    using a signing algorithm that Nessus either does not
+    support or does not recognize.
+
+If the remote host is a public host in production, any break in the
+chain makes it more difficult for users to verify the authenticity and 
+identity of the web server. This could make it easier to carry out 
+man-in-the-middle attacks against the remote host.",Purchase or generate a proper SSL certificate for this service.,"https://www.itu.int/rec/T-REC-X.509/en
+https://en.wikipedia.org/wiki/X.509","
+The following certificate was at the top of the certificate
+chain sent by the remote host, but it is signed by an unknown
+certificate authority :
+
+|-Subject : CN=CSI-DC3.chsi.local
+|-Issuer  : DC=local/DC=chsi/CN=chsi-CSI_DC1-CA
+",https://zh-tw.tenable.com/plugins/nessus/51192
+51192,,6.4,Medium,192.168.30.227,tcp,3269.0,SSL Certificate Cannot Be Trusted,The SSL certificate for this service cannot be trusted.,"The server's X.509 certificate cannot be trusted. This situation can
+occur in three different ways, in which the chain of trust can be
+broken, as stated below :
+
+  - First, the top of the certificate chain sent by the
+    server might not be descended from a known public
+    certificate authority. This can occur either when the
+    top of the chain is an unrecognized, self-signed
+    certificate, or when intermediate certificates are
+    missing that would connect the top of the certificate
+    chain to a known public certificate authority.
+
+  - Second, the certificate chain may contain a certificate
+    that is not valid at the time of the scan. This can
+    occur either when the scan occurs before one of the
+    certificate's 'notBefore' dates, or after one of the
+    certificate's 'notAfter' dates.
+
+  - Third, the certificate chain may contain a signature
+    that either didn't match the certificate's information
+    or could not be verified. Bad signatures can be fixed by
+    getting the certificate with the bad signature to be
+    re-signed by its issuer. Signatures that could not be
+    verified are the result of the certificate's issuer
+    using a signing algorithm that Nessus either does not
+    support or does not recognize.
+
+If the remote host is a public host in production, any break in the
+chain makes it more difficult for users to verify the authenticity and 
+identity of the web server. This could make it easier to carry out 
+man-in-the-middle attacks against the remote host.",Purchase or generate a proper SSL certificate for this service.,"https://www.itu.int/rec/T-REC-X.509/en
+https://en.wikipedia.org/wiki/X.509","
+The following certificate was at the top of the certificate
+chain sent by the remote host, but it is signed by an unknown
+certificate authority :
+
+|-Subject : CN=CSI-DC3.chsi.local
+|-Issuer  : DC=local/DC=chsi/CN=chsi-CSI_DC1-CA
+",https://zh-tw.tenable.com/plugins/nessus/51192
+65821,CVE-2013-2566,4.3,Medium,192.168.30.227,tcp,636.0,SSL RC4 Cipher Suites Supported (Bar Mitzvah),The remote service supports the use of the RC4 cipher.,"The remote host supports the use of RC4 in one or more cipher suites.
+The RC4 cipher is flawed in its generation of a pseudo-random stream
+of bytes so that a wide variety of small biases are introduced into
+the stream, decreasing its randomness.
+
+If plaintext is repeatedly encrypted (e.g., HTTP cookies), and an
+attacker is able to obtain many (i.e., tens of millions) ciphertexts,
+the attacker may be able to derive the plaintext.","Reconfigure the affected application, if possible, to avoid use of RC4
+ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser
+and web server support.","https://www.rc4nomore.com/
+http://www.nessus.org/u?ac7327a0
+http://cr.yp.to/talks/2013.03.12/slides.pdf
+http://www.isg.rhul.ac.uk/tls/
+https://www.imperva.com/docs/HII_Attacking_SSL_when_using_RC4.pdf","
+List of RC4 cipher suites supported by the remote server :
+
+  High Strength Ciphers (>= 112-bit key)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    RC4-MD5                       0x00, 0x04       RSA           RSA      RC4(128)               MD5
+    RC4-SHA                       0x00, 0x05       RSA           RSA      RC4(128)               SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/65821
+65821,CVE-2015-2808,4.3,Medium,192.168.30.227,tcp,636.0,SSL RC4 Cipher Suites Supported (Bar Mitzvah),The remote service supports the use of the RC4 cipher.,"The remote host supports the use of RC4 in one or more cipher suites.
+The RC4 cipher is flawed in its generation of a pseudo-random stream
+of bytes so that a wide variety of small biases are introduced into
+the stream, decreasing its randomness.
+
+If plaintext is repeatedly encrypted (e.g., HTTP cookies), and an
+attacker is able to obtain many (i.e., tens of millions) ciphertexts,
+the attacker may be able to derive the plaintext.","Reconfigure the affected application, if possible, to avoid use of RC4
+ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser
+and web server support.","https://www.rc4nomore.com/
+http://www.nessus.org/u?ac7327a0
+http://cr.yp.to/talks/2013.03.12/slides.pdf
+http://www.isg.rhul.ac.uk/tls/
+https://www.imperva.com/docs/HII_Attacking_SSL_when_using_RC4.pdf","
+List of RC4 cipher suites supported by the remote server :
+
+  High Strength Ciphers (>= 112-bit key)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    RC4-MD5                       0x00, 0x04       RSA           RSA      RC4(128)               MD5
+    RC4-SHA                       0x00, 0x05       RSA           RSA      RC4(128)               SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/65821
+65821,CVE-2013-2566,4.3,Medium,192.168.30.227,tcp,3269.0,SSL RC4 Cipher Suites Supported (Bar Mitzvah),The remote service supports the use of the RC4 cipher.,"The remote host supports the use of RC4 in one or more cipher suites.
+The RC4 cipher is flawed in its generation of a pseudo-random stream
+of bytes so that a wide variety of small biases are introduced into
+the stream, decreasing its randomness.
+
+If plaintext is repeatedly encrypted (e.g., HTTP cookies), and an
+attacker is able to obtain many (i.e., tens of millions) ciphertexts,
+the attacker may be able to derive the plaintext.","Reconfigure the affected application, if possible, to avoid use of RC4
+ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser
+and web server support.","https://www.rc4nomore.com/
+http://www.nessus.org/u?ac7327a0
+http://cr.yp.to/talks/2013.03.12/slides.pdf
+http://www.isg.rhul.ac.uk/tls/
+https://www.imperva.com/docs/HII_Attacking_SSL_when_using_RC4.pdf","
+List of RC4 cipher suites supported by the remote server :
+
+  High Strength Ciphers (>= 112-bit key)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    RC4-MD5                       0x00, 0x04       RSA           RSA      RC4(128)               MD5
+    RC4-SHA                       0x00, 0x05       RSA           RSA      RC4(128)               SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/65821
+65821,CVE-2015-2808,4.3,Medium,192.168.30.227,tcp,3269.0,SSL RC4 Cipher Suites Supported (Bar Mitzvah),The remote service supports the use of the RC4 cipher.,"The remote host supports the use of RC4 in one or more cipher suites.
+The RC4 cipher is flawed in its generation of a pseudo-random stream
+of bytes so that a wide variety of small biases are introduced into
+the stream, decreasing its randomness.
+
+If plaintext is repeatedly encrypted (e.g., HTTP cookies), and an
+attacker is able to obtain many (i.e., tens of millions) ciphertexts,
+the attacker may be able to derive the plaintext.","Reconfigure the affected application, if possible, to avoid use of RC4
+ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser
+and web server support.","https://www.rc4nomore.com/
+http://www.nessus.org/u?ac7327a0
+http://cr.yp.to/talks/2013.03.12/slides.pdf
+http://www.isg.rhul.ac.uk/tls/
+https://www.imperva.com/docs/HII_Attacking_SSL_when_using_RC4.pdf","
+List of RC4 cipher suites supported by the remote server :
+
+  High Strength Ciphers (>= 112-bit key)
+
+    Name                          Code             KEX           Auth     Encryption             MAC
+    ----------------------        ----------       ---           ----     ---------------------  ---
+    RC4-MD5                       0x00, 0x04       RSA           RSA      RC4(128)               MD5
+    RC4-SHA                       0x00, 0x05       RSA           RSA      RC4(128)               SHA1
+
+The fields above are :
+
+  {Tenable ciphername}
+  {Cipher ID code}
+  Kex={key exchange}
+  Auth={authentication}
+  Encrypt={symmetric encryption method}
+  MAC={message authentication code}
+  {export flag}
+",https://zh-tw.tenable.com/plugins/nessus/65821
+104743,,6.1,Medium,192.168.30.227,tcp,636.0,TLS Version 1.0 Protocol Detection,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.0. TLS 1.0 has a
+number of cryptographic design flaws. Modern implementations of TLS 1.0
+mitigate these problems, but newer versions of TLS like 1.2 and 1.3 are
+designed against these flaws and should be used whenever possible.
+
+As of March 31, 2020, Endpoints that arent enabled for TLS 1.2
+and higher will no longer function properly with major web browsers and major vendors.
+
+PCI DSS v3.2 requires that TLS 1.0 be disabled entirely by June 30,
+2018, except for POS POI terminals (and the SSL/TLS termination
+points to which they connect) that can be verified as not being
+susceptible to any known exploits.","Enable support for TLS 1.2 and 1.3, and disable support for TLS 1.0.",https://tools.ietf.org/html/draft-ietf-tls-oldversions-deprecate-00,TLSv1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/104743
+104743,,6.1,Medium,192.168.30.227,tcp,3269.0,TLS Version 1.0 Protocol Detection,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.0. TLS 1.0 has a
+number of cryptographic design flaws. Modern implementations of TLS 1.0
+mitigate these problems, but newer versions of TLS like 1.2 and 1.3 are
+designed against these flaws and should be used whenever possible.
+
+As of March 31, 2020, Endpoints that arent enabled for TLS 1.2
+and higher will no longer function properly with major web browsers and major vendors.
+
+PCI DSS v3.2 requires that TLS 1.0 be disabled entirely by June 30,
+2018, except for POS POI terminals (and the SSL/TLS termination
+points to which they connect) that can be verified as not being
+susceptible to any known exploits.","Enable support for TLS 1.2 and 1.3, and disable support for TLS 1.0.",https://tools.ietf.org/html/draft-ietf-tls-oldversions-deprecate-00,TLSv1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/104743
+157288,,6.1,Medium,192.168.30.227,tcp,636.0,TLS Version 1.1 Deprecated Protocol,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.1. TLS 1.1 lacks support for current and recommended
+cipher suites. Ciphers that support encryption before MAC computation, and authenticated encryption modes such as GCM
+cannot be used with TLS 1.1
+
+As of March 31, 2020, Endpoints that are not enabled for TLS 1.2 and higher will no longer function properly with major
+web browsers and major vendors.","Enable support for TLS 1.2 and/or 1.3, and disable support for TLS 1.1.","https://datatracker.ietf.org/doc/html/rfc8996
+http://www.nessus.org/u?c8ae820d",TLSv1.1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/157288
+157288,,6.1,Medium,192.168.30.227,tcp,3269.0,TLS Version 1.1 Deprecated Protocol,The remote service encrypts traffic using an older version of TLS.,"The remote service accepts connections encrypted using TLS 1.1. TLS 1.1 lacks support for current and recommended
+cipher suites. Ciphers that support encryption before MAC computation, and authenticated encryption modes such as GCM
+cannot be used with TLS 1.1
+
+As of March 31, 2020, Endpoints that are not enabled for TLS 1.2 and higher will no longer function properly with major
+web browsers and major vendors.","Enable support for TLS 1.2 and/or 1.3, and disable support for TLS 1.1.","https://datatracker.ietf.org/doc/html/rfc8996
+http://www.nessus.org/u?c8ae820d",TLSv1.1 is enabled and the server supports at least one cipher.,https://zh-tw.tenable.com/plugins/nessus/157288
+57608,,5.0,Medium,192.168.30.229,tcp,445.0,SMB Signing not required,Signing is not required on the remote SMB server.,"Signing is not required on the remote SMB server. An unauthenticated,
+remote attacker can exploit this to conduct man-in-the-middle attacks
+against the SMB server.","Enforce message signing in the host's configuration. On Windows, this
+is found in the policy setting 'Microsoft network server: Digitally
+sign communications (always)'. On Samba, the setting is called 'server
+signing'. See the 'see also' links for further details.","http://www.nessus.org/u?df39b8b3
+http://technet.microsoft.com/en-us/library/cc731957.aspx
+http://www.nessus.org/u?74b80723
+https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
+http://www.nessus.org/u?a3cac4ea",,https://zh-tw.tenable.com/plugins/nessus/57608
